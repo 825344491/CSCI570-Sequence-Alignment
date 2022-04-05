@@ -35,10 +35,10 @@ def output():
             os.system('python efficient_3.py ' + os.path.join(root, f) + ' outputs_efficient/out' + f.split('.')[0][2:] + '.txt')
 
 if __name__ == "__main__":
-    # output()
+    output()
     
     x = []
-    for root, ds, fs in os.walk('datapoint'):
+    for root, ds, fs in os.walk('datapoints'):
         for f in fs:
             m, n = input_size(os.path.join(root, f))
             x.append(m + n)
