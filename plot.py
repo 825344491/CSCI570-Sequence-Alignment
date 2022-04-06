@@ -1,4 +1,3 @@
-from cProfile import label
 import matplotlib.pyplot as plt
 import os
 
@@ -33,11 +32,6 @@ def output():
     for i in range(1, 16):
         os.system('python basic_3.py datapoints/in' + str(i) + '.txt outputs_basic/out' + str(i) + '.txt')
         os.system('python efficient_3.py datapoints/in' + str(i) + '.txt outputs_efficient/out' + str(i) + '.txt')
-    # for root, ds, fs in os.walk('datapoints'):
-    #     fs.sort()
-    #     for f in fs:
-    #         os.system('python basic_3.py ' + os.path.join(root, f) + ' outputs_basic/out' + f.split('.')[0][2:] + '.txt')
-    #         os.system('python efficient_3.py ' + os.path.join(root, f) + ' outputs_efficient/out' + f.split('.')[0][2:] + '.txt')
 
 if __name__ == "__main__":
     output()
@@ -46,11 +40,6 @@ if __name__ == "__main__":
     for i in range(1, 16):
         m, n = input_size('datapoints/in' + str(i) + '.txt')
         x.append(m + n)
-    # for root, ds, fs in os.walk('datapoints'):
-    #     fs.sort()
-    #     for f in fs:
-    #         m, n = input_size(os.path.join(root, f))
-    #         x.append(m + n)
     
     basic_time = []
     basic_memory = []
@@ -60,14 +49,6 @@ if __name__ == "__main__":
                 f.readline()
             basic_time.append(float(f.readline()))
             basic_memory.append(float(f.readline()))
-    # for root, ds, fs in os.walk('outputs_basic'):
-    #     fs.sort()
-    #     for f in fs:
-    #         with open(os.path.join(root, f), 'r') as file:
-    #             for _ in range(3):
-    #                 file.readline()
-    #             basic_time.append(float(file.readline()))
-    #             basic_memory.append(float(file.readline()))
     
     efficient_time = []
     efficient_memory = []
@@ -77,14 +58,6 @@ if __name__ == "__main__":
                 f.readline()
             efficient_time.append(float(f.readline()))
             efficient_memory.append(float(f.readline()))
-    # for root, ds, fs in os.walk('outputs_efficient'):
-    #     fs.sort()
-    #     for f in fs:
-    #         with open(os.path.join(root, f), 'r') as file:
-    #             for _ in range(3):
-    #                 file.readline()
-    #             efficient_time.append(float(file.readline()))
-    #             efficient_memory.append(float(file.readline()))
     
     fig, ax = plt.subplots()
     ax.set_xlabel('Problem size [m+n]')
