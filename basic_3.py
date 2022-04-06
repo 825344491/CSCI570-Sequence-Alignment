@@ -44,57 +44,6 @@ def input_generator(path):
         return s1, s2
 
 def align(s1, s2):
-    if len(s1) <= 2 or len(s2) <= 2:
-        return align_basic(s1, s2)
-    
-    s1_split = int(len(s1) / 2)
-    s2_split = find_best_split_point(s1, s2)
-    s1_align_left, s2_align_left, similarity_left = align(s1[:s1_split], s2[:s2_split])
-    s1_align_right, s2_align_right, similarity_right = align(s1[s1_split:], s2[s2_split:])
-    
-    return s1_align_left + s1_align_right, s2_align_left + s2_align_right, similarity_left + similarity_right
-
-def find_best_split_point(s1, s2):
-    opt_left = [[0] * (len(s2) + 1) for _ in range(2)]
-    opt_left[1][0] = GAP
-    for i in range(1, len(s2) + 1):
-        opt_left[0][i] = GAP * i
-    
-    for i in range(1, int(len(s1) / 2) + 1):
-        for j in range(1, len(s2) + 1):
-            opt_left[1][j] = min(MISMATCH[INDEX[s1[i - 1]]][INDEX[s2[j - 1]]] + opt_left[0][j - 1], GAP + opt_left[0][j], GAP + opt_left[1][j - 1])
-        
-        for j in range(len(s2) + 1):
-            opt_left[0][j] = opt_left[1][j]
-        
-        opt_left[1][0] = GAP * (i + 1)
-    
-    s1r = s1[::-1]
-    s2r = s2[::-1]
-    opt_right = [[0] * (len(s2r) + 1) for _ in range(2)]
-    opt_right[1][0] = GAP
-    for i in range(1, len(s2r) + 1):
-        opt_right[0][i] = GAP * i
-    
-    for i in range(1, len(s1r) - int(len(s1r) / 2) + 1):
-        for j in range(1, len(s2r) + 1):
-            opt_right[1][j] = min(MISMATCH[INDEX[s1r[i - 1]]][INDEX[s2r[j - 1]]] + opt_right[0][j - 1], GAP + opt_right[0][j], GAP + opt_right[1][j - 1])
-        
-        for j in range(len(s2r) + 1):
-            opt_right[0][j] = opt_right[1][j]
-        
-        opt_right[1][0] = GAP * (i + 1)
-    
-    opt = sys.maxsize
-    opt_index = -1
-    for i in range(len(s2r) + 1):
-        if opt_left[1][i] + opt_right[1][len(s2r) - i] < opt:
-            opt = opt_left[1][i] + opt_right[1][len(s2r) - i]
-            opt_index = i
-    
-    return opt_index
-
-def align_basic(s1, s2):
     opt = [[0] * (len(s2) + 1) for _ in range(len(s1) + 1)]
     for i in range(1, len(s1) + 1):
         opt[i][0] = GAP * i
@@ -154,6 +103,3 @@ if __name__ == "__main__":
         f.writelines(s2_align + '\n')
         f.writelines(str(time_taken) + '\n')
         f.writelines(str(process_memory()) + '\n')
-
-
-#python efficient_3.py SampleTestCases/input1.txt output.txt

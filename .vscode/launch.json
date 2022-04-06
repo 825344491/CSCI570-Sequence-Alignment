@@ -12,7 +12,7 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": [
-                "SampleTestCases/input1.txt",
+                "SampleTestCases/input5.txt",
                 "output.txt"
             ]
         }
